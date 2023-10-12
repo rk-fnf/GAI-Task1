@@ -1,0 +1,58 @@
+﻿@page "/resumeupload"
+@using Azure.Storage.Blobs;
+@page "/fileupload"
+@using Azure.Storage.Blobs
+
+<h3>File Upload</h3>
+
+@*<input type="file" @ref="fileInput" @onchange="HandleFileChange" multiple />*@
+<button @onclick="UploadFile">Upload</button>
+
+@if (uploadResult != null)
+{
+    <p>Upload Result: @uploadResult</p>
+}
+
+@code {
+    private ElementReference fileInput;
+    private string uploadResult;
+    private IBrowserFile selectedFile;
+
+   
+
+    private void HandleFileChange(InputFileChangeEventArgs e)
+    {
+        selectedFile = e.File;
+    }
+
+    private async Task UploadFile()
+    {
+        if (selectedFile != null)
+        {
+            try
+            {
+                var connectionString = "DefaultEndpointsProtocol=https;AccountName=empstorage5641;AccountKey=4ErxZNXlMCAs466AWB6VYp9YdG28+7iMVEHln7o87AoDpdxsnc/6cuco/2D/ctEh2ARFOhVk11Ct+AStUc/2/w==;EndpointSuffix=core.windows.net";
+                var containerName = "empdatacontainer";
+                var blobName = Guid.NewGuid().ToString();
+
+                var blobServiceClient = new BlobServiceClient(connectionString);
+                var containerClient = blobServiceClient.GetBlobContainerClient(containerName);
+                var blobClient = containerClient.GetBlobClient(blobName);
+
+                using (var stream = selectedFile.OpenReadStream())
+                {
+                    await blobClient.UploadAsync(stream, true);
+                }
+
+                uploadResult = "File uploaded successfully!";
+            }
+            catch (Exception ex)
+            {
+                uploadResult = $"Error: {ex.Message}";
+            }
+        }
+    }
+}
+
+
+

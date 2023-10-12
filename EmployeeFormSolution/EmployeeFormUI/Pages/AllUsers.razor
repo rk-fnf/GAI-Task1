@@ -1,0 +1,52 @@
+﻿@page "/allusers" 
+
+@using EmployeeForm.Domain;
+@using EmployeeFormUI.Services;
+@inherits AllUsersBase
+@inject HttpClient httpClient 
+
+
+<h1 style="text-align: center;color:dimgray;">All Registered Members</h1>
+<hr />
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th>Id</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Age</th>
+           <th>Qualification</th>
+           <th>Email</th>
+           <th>Photo</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in users)
+        {
+            <tr>
+                <th>@user.Id</th>
+                <td>@RenderField(user.Firstname, user.Id, "Firstname")</td>
+                <td>@RenderField(user.Lastname, user.Id, "Lastname")</td>
+                <td>@RenderField(user.Age, user.Id, "Age")</td>
+                <td>@RenderField(user.Qualification, user.Id, "Qualification")</td>
+                <td>@RenderField(user.Email, user.Id, "Email")</td>
+                <td><img src="@user.PhotoURl" width="80" height="100" /></td>
+                
+                <td>
+                    @if (user.Id == selectedUserId)
+                    {
+                        <button class="btn btn-success" @onclick="() => UpdateUserAsync(user)">Save</button>
+                        <button class="btn btn-secondary" @onclick="CancelEdit">Cancel</button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-primary" @onclick="() => EditUser(user)">Edit</button>
+                        <button class="btn btn-danger" @onclick="() => DeleteUserAsync(user)">Delete</button>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

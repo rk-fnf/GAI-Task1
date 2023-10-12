@@ -1,0 +1,28 @@
+﻿@page "/upload"
+@using EmployeeFormUI.Services;
+@using Azure.Storage.Blobs
+@inherits UploadBase
+
+<h3>Upload Your Resume</h3>
+
+<InputFile OnChange="@LoadFiles" multiple ></InputFile>
+
+<button class="btn btn-success" @onclick="UploadFile">Upload</button>
+
+@if (uploadResult != null)
+{
+    <p style="padding:20px">Upload Result: @uploadResult</p>
+}
+
+@if (errors.Count > 0)
+{
+    <h2>Errors</h2>
+    <ul class="text-danger">
+        @foreach (var error in errors)
+        {
+            <li>@error</li>
+        }
+    </ul>
+}
+
+

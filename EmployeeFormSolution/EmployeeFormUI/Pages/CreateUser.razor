@@ -1,0 +1,55 @@
+﻿@page "/createuser"
+@using EmployeeFormUI.Services;
+
+@using EmployeeForm.Domain;
+@using System.Net.Http
+@inject HttpClient httpClient
+@inherits CreateUserBase
+
+<h1>Register Today!</h1>
+<h4>
+    You can get registered for interview by filling the form or you can upload your resume. Once registered you can edit your details in All Users tab.
+</h4>
+<div>
+    <div class="b">
+        <h3>Enter Your Details</h3>
+        <form>
+            <div class="form-group">
+                <label for="firstname">Id:</label>
+                <input type="text" class="form-control" id="firstname" @bind="user.Id" />
+            </div>
+            <div class="form-group">
+                <label for="firstname">First Name:</label>
+                <input type="text" class="form-control" id="firstname" @bind="user.Firstname" />
+            </div>
+            <div class="form-group">
+                <label for="lastname">Last Name:</label>
+                <input type="text" class="form-control" id="lastname" @bind="user.Lastname" />
+            </div>
+            <div class="form-group">
+                <label for="age">Age:</label>
+                <input type="text" class="form-control" id="age" @bind="user.Age" />
+            </div>
+            <div class="form-group">
+                <label for="qualification">Qualification:</label>
+                <input type="text" class="form-control" id="qualification" @bind="user.Qualification" />
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" class="form-control" id="email" @bind="user.Email" />
+            </div>
+            <div class="form-group">
+                <label for="photoUrl">Photo URL:</label>
+                <input type="text" class="form-control" id="photoUrl" @bind="user.PhotoURl" />
+            </div>
+            <button type="submit" class="btn btn-primary" @onclick="CreateUserInfo">Create</button>
+        </form>
+        </div>
+   --- OR ---
+    <div class="b">
+        <Upload></Upload>
+    </div>
+</div>
+
+
+
